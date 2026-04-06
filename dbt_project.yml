@@ -54,6 +54,8 @@ models:
 
     intermediate:
       +materialized: view
+      local_bike: 
+        +schema: int_local_bike
       sales_database: 
         +schema: int_sales_database
 
