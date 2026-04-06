@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: stg_local_bike__brands
+  - name: stg_local_bike_production__brands
     description: "This model contains the name of the brands"
     columns:
       - name: brand_id
@@ -14,7 +14,7 @@ models:
         tests:
             - not_null
 
-  - name: stg_local_bike__categories
+  - name: stg_local_bike_production__categories
     description: "This model contains the name of the categories"
     columns:
       - name: category_id
@@ -26,8 +26,8 @@ models:
         description: "Name of each category."
         tests:
             - not_null
-            
-  - name: stg_local_bike__stocks
+
+  - name: stg_local_bike_production__stocks
     description: "This model contains the number of stock for each store and product. "
     columns:
       - name: product_store_id
@@ -41,7 +41,7 @@ models:
             - not_null
           - relationships:
               arguments:
-                to: ref('stg_local_bike__stores')
+                to: ref('stg_local_bike_sales__stores')
                 field: store_id
       - name: product_id
         description: "Foreign key linking the number of stock to the corresponding product."
@@ -49,14 +49,14 @@ models:
             - not_null
           - relationships:
               arguments:
-                to: ref('stg_local_bike__products')
+                to: ref('stg_local_bike_production__products')
                 field: product_id
       - name: stock_to_date
         description: "The number of stock to date."
         tests:
             - not_null
 
-  - name: stg_local_bike__products
+  - name: stg_local_bike_production__products
     description: "This model contains detailed information about all the products."
     columns:
       - name: product_id
@@ -70,7 +70,7 @@ models:
             - not_null
           - relationships:
               arguments:
-                to: ref('stg_local_bike__brands')
+                to: ref('stg_local_bike_production__brands')
                 field: brand_id
       - name: category_id
         description: "Foreign key linking the products information to the corresponding category name."
@@ -78,7 +78,7 @@ models:
             - not_null
           - relationships:
               arguments:
-                to: ref('stg_local_bike__categories')
+                to: ref('stg_local_bike_production__categories')
                 field: category_id
       - name: model_year
         description: "Model year of each product."
