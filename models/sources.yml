@@ -1,15 +1,18 @@
 version: 2
 
 sources:
-  - name: googles_analytics_4
-    schema: google_analytics_4
+  - name: local_bike
+    schema: local_bike
     tables:
-      - name: events_20210131
-      
-  - name: google_sheets
-    schema: google_sheets
-    tables:
-      - name: account_manager_region_mapping
+      - name: categories
+      - name: products
+      - name: stocks
+      - name: brands
+      - name: staffs
+      - name: stores
+      - name: order_items
+      - name: customers
+      - name: orders
 
   - name: sales_database
     schema: sales_database

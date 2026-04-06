@@ -1,0 +1,123 @@
+version: 2
+
+models:
+  - name: stg_local_bike_sales__orders
+    description: "This model contains information about orders placed by customers, including the status of each order and shipment date."
+    columns:
+      - name: order_id
+        description: "Primary key, unique identifier for each order."
+        tests:
+            - unique
+            - not_null
+      - name: customer_id
+        description: "Foreign key linking the order to the user who placed it."
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_local_bike_sales__customers')
+                field: customer_id
+          - not_null
+      - name: order_status
+        description: "The current status of the order."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments: 
+                values: ['1', '2', '3', '4']
+      - name: order_date
+        description: "The date the order was placed."
+        tests:
+            - not_null
+      - name: required_date
+        description: "The date the customer wants the delivery."
+        tests:
+            - not_null
+      - name: shipped_date
+        description: "The date of shipment."
+      - name: store_id
+        description: "Foreign key linking the order to the corresponding store."
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_local_bike_sales__stores')
+                field: store_id
+          - not_null
+      - name: staff_id
+        description: "Foreign key linking the order to the corresponding staff."
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_local_bike_sales__staffs')
+                field: order_id
+          - not_null
+
+  - name: stg_local_bike_sales__order_items
+    description: "This model contains information about each item included in an order, including its price, discount and quantity."
+    columns:
+      - name: order_item_id
+        description: "Primary key, unique identifier for each order item : resulting from the concatenation of order_id and item_id"
+        tests:
+            - unique
+            - not_null
+      - name: order_id
+        description: "Foreign key linking the order item to the corresponding order."
+        tests:
+          - relationships:
+              arguments: 
+                to: ref('stg_local_bike_production__orders')
+                field: order_id 
+          - not_null
+      - name: item_id
+        description: "Unique identifier for each order item."
+        tests:
+            - unique
+            - not_null
+      - name: order_item_amount
+        description: "The amount for each order item, calculated as ((price - discount) * quantity)."
+      - name: item_quantity
+        description: "The quantity for each order item."
+      - name: std_price
+        description: "The standard price for each order item."
+      - name: reduced_price
+        description: "The price after discount for each order item."
+      - name: discount_percentage
+        description: "The discount applied for each order item, calculated as (discount * 100)."
+
+
+  - name: stg_local_bike_sales__staffs
+    description: "This model contains personal information about staffs including their affectations (manager, store)."
+    columns:
+      - name: staff_id
+        description: "Primary key, unique identifier for each staff."
+        tests:
+            - unique
+            - not_null
+      - name: store_id
+        description: "Foreign key linking the staff to the corresponding store."
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_local_bike_sales__stores')
+                field: store_id
+
+
+  - name: stg_local_bike_sales__stores
+    description: "This model contains detailed information about the stores selling the products."
+    columns:
+      - name: store_id
+        description: "Primary key, unique identifier for each store."
+        tests:
+            - unique
+            - not_null
+
+  - name: stg_local_bike_sales__customers
+    description: "This model contains personal information about customers."
+    columns:
+      - name: customer_id
+        description: "Primary key, unique identifier for each customer."
+        tests:
+            - unique
+            - not_null
+
+
+
