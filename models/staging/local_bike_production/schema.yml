@@ -14,6 +14,7 @@ models:
         tests:
             - not_null
 
+
   - name: stg_local_bike_production__categories
     description: "This model contains the name of the categories"
     columns:
@@ -26,6 +27,7 @@ models:
         description: "Name of each category."
         tests:
             - not_null
+
 
   - name: stg_local_bike_production__stocks
     description: "This model contains the number of stock for each store and product. "
@@ -55,6 +57,7 @@ models:
         description: "The number of stock to date."
         tests:
             - not_null
+
 
   - name: stg_local_bike_production__products
     description: "This model contains detailed information about all the products."
