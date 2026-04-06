@@ -2,7 +2,7 @@
 # Name your project! Project names should contain only lowercase characters
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
-name: 'my_first_dbt_project'
+name: 'final_project'
 version: '1.0.0'
 config-version: 2
 
@@ -40,7 +40,7 @@ models:
       relation: true
       columns: true
       
-  my_first_dbt_project:
+  final_project:
 
     staging:
       +materialized: view
