@@ -74,7 +74,7 @@ models:
             - not_null
       - name: order_item_amount
         description: "The amount for each order item, calculated as ((price - discount) * quantity)."
-      - name: item_quantity
+      - name: order_item_quantity
         description: "The quantity for each order item."
       - name: std_price
         description: "The standard price for each order item."
