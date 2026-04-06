@@ -39,20 +39,21 @@ models:
             - not_null
       - name: store_id
         description: "Foreign key linking the number of stock to the corresponding store."
+      - name: customer_id
         tests:
-            - not_null
           - relationships:
-              arguments:
+              arguments: 
                 to: ref('stg_local_bike_sales__stores')
                 field: store_id
+          - not_null
       - name: product_id
         description: "Foreign key linking the number of stock to the corresponding product."
         tests:
-            - not_null
           - relationships:
-              arguments:
+              arguments: 
                 to: ref('stg_local_bike_production__products')
                 field: product_id
+          - not_null
       - name: stock_to_date
         description: "The number of stock to date."
         tests:
@@ -70,19 +71,19 @@ models:
       - name: brand_id
         description: "Foreign key linking the products information to the corresponding brand name."
         tests:
-            - not_null
           - relationships:
-              arguments:
+              arguments: 
                 to: ref('stg_local_bike_production__brands')
                 field: brand_id
+          - not_null
       - name: category_id
         description: "Foreign key linking the products information to the corresponding category name."
         tests:
-            - not_null
           - relationships:
-              arguments:
+              arguments: 
                 to: ref('stg_local_bike_production__categories')
-                field: category_id
+                field: category_id 
+          - not_null
       - name: model_year
         description: "Model year of each product."
         tests:

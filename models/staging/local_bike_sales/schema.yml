@@ -59,9 +59,10 @@ models:
         description: "Foreign key linking the order item to the corresponding order."
         tests:
           - relationships:
-              arguments:
-                to: ref('stg_local_bike_sales__orders')
-                field: order_id
+              arguments: 
+                to: ref('stg_local_bike_production__orders')
+                field: order_id 
+          - not_null
       - name: total_order_item_amount
         description: "The total amount for this order item, calculated as (price * quantity) + shipping_cost."
 
