@@ -1,6 +1,20 @@
 version: 2
 
 sources:
+  - name: local_bike
+    schema: local_bike
+    tables:
+      - name: brands
+      - name: categories
+      - name: customers
+      - name: orders
+      - name: order_items
+      - name: products
+      - name: staffs
+      - name: stocks
+      - name: stores
+
+
   - name: googles_analytics_4
     schema: google_analytics_4
     tables:
