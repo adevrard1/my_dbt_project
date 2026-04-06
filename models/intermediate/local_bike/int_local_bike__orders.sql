@@ -5,7 +5,7 @@ select
     sum(order_item_amount) as total_order_amount,
     sum(order_item_quantity) as total_order_quantity,
     count(distinct item_id) as total_distinct_items
-from dbt_aevrard_stg_local_bike_sales.stg_local_bike_sales__order_items
+from {{ref('stg_local_bike_sales__order_items')}}
 group by order_id
 
 ), customers_details as (
@@ -14,36 +14,38 @@ select
     customer_id,
     city as customer_city,
     state as customer_state
-from dbt_aevrard_stg_local_bike_sales.stg_local_bike_sales__customers
+from {{ref('stg_local_bike_sales__customers')}}
 
 ), staffs_details as (
 
 select
     staff_id,
-    concat(first_name,'_',last_name) as staff_name
-from dbt_aevrard_stg_local_bike_sales.stg_local_bike_sales__staffs
+    concat(first_name,'_',last_name) as staff_name,
+    manager_id
+from {{ref('stg_local_bike_sales__staffs')}}
 
 ), stores_details as (
 
 select 
     store_id,
+    store_name,
     city as store_city,
     state as store_state
-from dbt_aevrard_stg_local_bike_sales.stg_local_bike_sales__stores
+from {{ref('stg_local_bike_sales__stores')}}
 )
 
 select 
-    order_id,
-    customer_id,
+    o.order_id,
+    o.customer_id,
     customer_state,
     customer_city,
-    staff_id,
+    o.staff_id,
     staff_name,
-    store_id,
+    manager_id,
+    o.store_id,
     store_name,
     store_city,
     store_state,
-    manager_id,
     order_status,
     required_date,
     shipped_date,
@@ -51,7 +53,7 @@ select
     total_order_quantity,
     total_distinct_items
 
-from dbt_aevrard_stg_local_bike_sales.stg_local_bike_sales__orders as o
+from {{ref('stg_local_bike_sales__orders')}} as o
 left join order_sales os on o.order_id = os.order_id 
 left join customers_details cd on o.customer_id = cd.customer_id
 left join staffs_details sd on sd.staff_id = o.staff_id
