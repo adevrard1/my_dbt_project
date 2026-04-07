@@ -10,7 +10,10 @@ WITH
       ROUND(SUM(total_order_amount) / COUNT(DISTINCT order_id), 2)
         AS avg_spend_per_order
     FROM {{ref('int_local_bike__orders')}}
-    GROUP BY customer_id
+    GROUP BY 
+      customer_id,
+      customer_state,
+      customer_city
   ),
   max_date AS (
     SELECT

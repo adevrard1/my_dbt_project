@@ -49,17 +49,14 @@ models:
         +schema: stg_local_bike_production
       local_bike_sales:
         +schema: stg_local_bike_sales
-      sales_database:
-        +schema: stg_sales_database
 
     intermediate:
       +materialized: view
       local_bike: 
         +schema: int_local_bike
-      sales_database: 
-        +schema: int_sales_database
 
     mart:
       +schema: mart
       +materialized: table
-
+      local_bike: 
+        +schema: mart_local_bike
