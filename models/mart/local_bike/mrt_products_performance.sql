@@ -13,10 +13,6 @@ WITH monthly_sales_per_product AS (
         ROUND(SUM(total_amount)/NULLIF(SUM(total_quantity),0) - start_price,2) AS price_discount,
         SUM(stock_to_date) AS stock_to_date
     FROM {{ ref('int_local_bike__products') }} p 
-    LEFT JOIN {{ ref('stg_local_bike_production__categories') }} c 
-    ON p.category_id = c.category_id
-    LEFT JOIN {{ ref('stg_local_bike_production__brands') }} b 
-    ON p.brand_id = b.brand_id
     GROUP BY month_year, product_id, product_name, brand_name, category_name, model_year, start_price
 ),
 
@@ -42,12 +38,12 @@ SELECT
     ms.brand_name,
     ms.category_name,
     ms.model_year,
-    ms.start_price,
     ms.total_amount AS turnover,
     ms.total_amount / SUM(ms.total_amount) OVER (PARTITION BY ms.month_year) * 100 AS turnover_contribution,
     ROW_NUMBER() OVER (PARTITION BY ms.month_year ORDER BY ms.total_amount DESC) AS ranking_products_by_turnover_per_month,
     ms.total_quantity,
     ms.avg_price,
+    ms.start_price,
     ms.price_discount,
     ms.stock_to_date,
     ms.stock_to_date / NULLIF(p.avg_quantity_sold_per_day_last30d,0) AS estimated_nb_days_of_stock_ahead,

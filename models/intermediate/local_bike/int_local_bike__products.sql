@@ -17,11 +17,15 @@ product_description as (
   SELECT 
     product_id,
     product_name,
-    brand_id,
-    category_id,
+    brand_name,
+    category_name,
     model_year,
-    std_price
-  FROM {{ref('stg_local_bike_production__products')}}
+    start_price
+  FROM {{ref('stg_local_bike_production__products')}} p 
+  LEFT JOIN {{ ref('stg_local_bike_production__categories') }} c 
+    ON p.category_id = c.category_id
+  LEFT JOIN {{ ref('stg_local_bike_production__brands') }} b
+    ON p.brand_id = b.brand_id 
 ),
 
 product_stock as (
@@ -37,14 +41,14 @@ select
   month_year,
   pd.product_id,
   product_name,
-  brand_id,
-  category_id,
+  brand_name,
+  category_name,
   model_year,
-  std_price as start_price,
+  start_price,
   ROUND(total_amount,2) as total_amount,
   total_quantity,
   ROUND(total_amount/total_quantity,2) as final_price,
-  ROUND(total_amount/total_quantity - std_price,2) as price_discount,
+  ROUND(total_amount/total_quantity - start_price,2) as price_gap_after_discount,
   stock_to_date
 
 FROM product_description pd 
