@@ -1,3 +1,5 @@
+
+
 SELECT
   CAST(order_id AS string) AS order_id,
   CAST(customer_id AS string) AS customer_id,

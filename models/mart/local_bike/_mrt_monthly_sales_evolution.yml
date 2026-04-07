@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: mrt_monthly_sales_evolution
+    description: '{{ doc("mrt_monthly_sales_evolution") }}'
+    columns:
+      - name: month_year
+        description: Primary key, unique identifier for each row.
+  
