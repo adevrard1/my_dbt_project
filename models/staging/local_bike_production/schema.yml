@@ -85,7 +85,7 @@ models:
         description: "Model year of each product."
         tests:
             - not_null
-      - name: std_price
+      - name: start_price
         description: "Standard price of each product."
         tests:
             - not_null
