@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: int_local_bike__products
+    description: '{{ doc("int_local_bike__products") }}'
+    columns:
+      - name: date
+        description: Primary key, unique identifier for each date when products are sold.
+  
