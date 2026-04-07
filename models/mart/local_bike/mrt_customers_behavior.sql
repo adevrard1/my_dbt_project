@@ -2,6 +2,8 @@ WITH
   rfm AS (
     SELECT
       customer_id,
+      customer_state,
+      customer_city,
       MAX(order_date) AS last_purchase_date,
       COUNT(DISTINCT order_id) AS nb_orders,
       ROUND(SUM(total_order_amount), 2) AS total_amount_spend,
@@ -18,6 +20,8 @@ WITH
   rfm_score AS (
     SELECT
       customer_id,
+      customer_state,
+      customer_city,
       total_amount_spend,
       NTILE(5) OVER (ORDER BY total_amount_spend) AS amount_spend_score,
       avg_spend_per_order,
