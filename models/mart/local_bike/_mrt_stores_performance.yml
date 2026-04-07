@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: mrt_stores_performance
+    description: '{{ doc("mrt_stores_performance") }}'
+    columns:
+      - name: month_year
+        description: Primary key, unique identifier for each row.
+  

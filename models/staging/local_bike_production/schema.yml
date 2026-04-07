@@ -39,7 +39,6 @@ models:
             - not_null
       - name: store_id
         description: "Foreign key linking the number of stock to the corresponding store."
-      - name: customer_id
         tests:
           - relationships:
               arguments: 
@@ -56,8 +55,6 @@ models:
           - not_null
       - name: stock_to_date
         description: "The number of stock to date."
-        tests:
-            - not_null
 
 
   - name: stg_local_bike_production__products

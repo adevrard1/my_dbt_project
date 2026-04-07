@@ -3,4 +3,7 @@ version: 2
 models:
   - name: mrt_customers_behavior
     description: '{{ doc("mrt_customers_behavior") }}'
+    columns:
+      - name: customer_id
+        description: Primary key, unique identifier for each row.
   
