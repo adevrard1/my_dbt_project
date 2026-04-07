@@ -3,8 +3,8 @@ WITH monthly_sales_per_product AS (
         month_year,
         product_id,
         product_name,
-        brand_id,
-        category_id,
+        brand_name,
+        category_name,
         model_year,
         start_price,
         ROUND(SUM(total_amount),2) AS total_amount,
@@ -12,8 +12,12 @@ WITH monthly_sales_per_product AS (
         ROUND(SUM(total_amount)/NULLIF(SUM(total_quantity),0),2) AS avg_price,
         ROUND(SUM(total_amount)/NULLIF(SUM(total_quantity),0) - start_price,2) AS price_discount,
         SUM(stock_to_date) AS stock_to_date
-    FROM {{ ref('int_local_bike__products') }}
-    GROUP BY month_year, product_id, product_name, brand_id, category_id, model_year, start_price
+    FROM {{ ref('int_local_bike__products') }} p 
+    LEFT JOIN {{ ref('stg_local_bike_production__categories') }} c 
+    ON p.category_id = c.category_id
+    LEFT JOIN {{ ref('stg_local_bike_production__brands') }} b 
+    ON p.brand_id = b.brand_id
+    GROUP BY month_year, product_id, product_name, brand_name, category_name, model_year, start_price
 ),
 
 max_date AS (
@@ -35,8 +39,8 @@ SELECT
     ms.month_year,
     ms.product_id,
     ms.product_name,
-    ms.brand_id,
-    ms.category_id,
+    ms.brand_name,
+    ms.category_name,
     ms.model_year,
     ms.start_price,
     ms.total_amount AS turnover,
