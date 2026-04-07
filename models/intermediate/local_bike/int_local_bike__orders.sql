@@ -26,7 +26,7 @@ from {{ref('stg_local_bike_sales__customers')}}
 
 select
     staff_id,
-    concat(first_name,'_',last_name) as staff_name,
+    staff_name,
     manager_id
 from {{ref('stg_local_bike_sales__staffs')}}
 
