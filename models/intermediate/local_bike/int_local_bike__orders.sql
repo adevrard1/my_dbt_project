@@ -1,3 +1,9 @@
+{{ config(
+    cluster_by= 'order_date'
+)}}
+
+
+
 with order_sales as (
 
 select 
