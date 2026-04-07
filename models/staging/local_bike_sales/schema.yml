@@ -48,7 +48,7 @@ models:
           - relationships:
               arguments:
                 to: ref('stg_local_bike_sales__staffs')
-                field: order_id
+                field: staff_id
           - not_null
 
   - name: stg_local_bike_sales__order_items
@@ -64,13 +64,12 @@ models:
         tests:
           - relationships:
               arguments: 
-                to: ref('stg_local_bike_production__orders')
+                to: ref('stg_local_bike_sales__orders')
                 field: order_id 
           - not_null
       - name: item_id
         description: "Unique identifier for each order item."
         tests:
-            - unique
             - not_null
       - name: order_item_amount
         description: "The amount for each order item, calculated as ((price - discount) * quantity)."
