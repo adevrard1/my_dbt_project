@@ -36,6 +36,7 @@ from {{ref('stg_local_bike_sales__stores')}}
 
 select 
     o.order_id,
+    order_date,
     o.customer_id,
     customer_state,
     customer_city,
