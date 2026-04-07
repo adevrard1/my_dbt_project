@@ -26,8 +26,8 @@ last_30d_sales_per_product AS (
         p.product_id,
         SUM(p.total_quantity)/30 AS avg_quantity_sold_per_day_last30d
     FROM {{ ref('int_local_bike__products') }} p
-    JOIN max_date md
-      ON p.date >= md.max_date - INTERVAL '30' DAY
+    CROSS JOIN max_date md
+    WHERE p.date >= DATE_SUB(md.max_date, INTERVAL 30 DAY)
     GROUP BY p.product_id
 )
 
@@ -39,18 +39,18 @@ SELECT
     ms.category_name,
     ms.model_year,
     ms.total_amount AS turnover,
-    ms.total_amount / SUM(ms.total_amount) OVER (PARTITION BY ms.month_year) * 100 AS turnover_contribution,
+    ROUND(SAFE_DIVIDE(ms.total_amount, SUM(ms.total_amount) OVER (PARTITION BY ms.month_year)) * 100,1) AS turnover_contribution,
     ROW_NUMBER() OVER (PARTITION BY ms.month_year ORDER BY ms.total_amount DESC) AS ranking_products_by_turnover_per_month,
     ms.total_quantity,
     ms.avg_price,
     ms.start_price,
     ms.price_discount,
     ms.stock_to_date,
-    ms.stock_to_date / NULLIF(p.avg_quantity_sold_per_day_last30d,0) AS estimated_nb_days_of_stock_ahead,
+    SAFE_DIVIDE(ms.stock_to_date, p.avg_quantity_sold_per_day_last30d) AS estimated_nb_days_of_stock_ahead,
     CASE 
         WHEN ms.stock_to_date <= 0 AND p.avg_quantity_sold_per_day_last30d > 0 THEN 'out of stock'
-        WHEN ms.stock_to_date > 0 AND ms.stock_to_date / NULLIF(p.avg_quantity_sold_per_day_last30d,0) < 7 THEN 'not enough stock'
-        WHEN ms.stock_to_date / NULLIF(p.avg_quantity_sold_per_day_last30d,0) > 30 THEN 'over stock'
+        WHEN ms.stock_to_date > 0 AND SAFE_DIVIDE(ms.stock_to_date, p.avg_quantity_sold_per_day_last30d) < 7 THEN 'not enough stock'
+        WHEN SAFE_DIVIDE(ms.stock_to_date, p.avg_quantity_sold_per_day_last30d) > 30 THEN 'over stock'
         ELSE 'enough stock'
     END AS stock_management
 FROM monthly_sales_per_product ms
