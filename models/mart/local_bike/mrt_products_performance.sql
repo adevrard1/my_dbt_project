@@ -32,8 +32,8 @@ SELECT
     price_discount,
     stock_to_date,
     CASE 
-        WHEN ms.stock_to_date = 0 THEN 'out of stock'
-        WHEN ms.stock_to_date < 10 THEN 'low stock'
+        WHEN stock_to_date = 0 THEN 'out of stock'
+        WHEN stock_to_date < 10 THEN 'low stock'
         ELSE 'enough stock'
     END AS stock_management
 FROM monthly_sales_per_product 

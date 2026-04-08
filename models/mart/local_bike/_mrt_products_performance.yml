@@ -5,5 +5,7 @@ models:
     description: '{{ doc("mrt_products_performance") }}'
     columns:
       - name: month_year
-        description: Primary key, unique identifier for each row.
+        description: Composite primary key with product_id, unique identifier for each row.
+      - name: product_id
+        description: Composite primary key with month_year, unique identifier for each row.    
   
