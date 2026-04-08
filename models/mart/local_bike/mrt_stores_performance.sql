@@ -21,7 +21,15 @@ deliveries as (
         SUM(order_not_delivered) as nb_order_not_delivered,
         SUM(shipment_is_late) as nb_shipments_late
     from {{ref('mrt_orders_management')}}  
-    group by 1,2)
+    group by 1,2),
+
+stocks as (
+    SELECT
+        store_id,
+        SUM(stock_to_date) as stock_to_date,
+        SUM(CASE WHEN SUM(stock_to_date) = 0 THEN 1 END) as nb_products_out_of_stock
+FROM {{ref('int_local_bike__stocks')}} 
+)
 
 SELECT
     s.month_year,
@@ -36,8 +44,12 @@ SELECT
     s.nb_orders,
     s.avg_amount_per_order,
     d.nb_order_not_delivered,
-    d.nb_shipments_late
+    d.nb_shipments_late,
+    st.stock_to_date,
+    st.nb_products_out_of_stock
 FROM sales s 
 LEFT JOIN deliveries d 
 ON s.month_year = d.month_year and s.store_id = d.store_id
+LEFT JOIN stocks st
+ON s.store_id = st.store_id
 ORDER BY month_year DESC, ranking_turnover_stores_per_month
