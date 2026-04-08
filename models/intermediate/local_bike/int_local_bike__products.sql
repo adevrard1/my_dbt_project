@@ -4,12 +4,10 @@ SELECT
   product_id,
   DATE_TRUNC(order_date,MONTH) as month_year,
   order_date as date,
-  ROUND(sum(order_item_amount),2) as total_amount,
-  sum(order_item_quantity) as total_quantity 
+  ROUND(sum(total_order_amount),2) as total_amount,
+  sum(total_order_quantity) as total_quantity 
 
- FROM {{ref('stg_local_bike_sales__order_items')}} oi 
- LEFT JOIN {{ref('stg_local_bike_sales__orders')}} o 
- ON oi.order_id = o.order_id
+ FROM {{ref('int_local_bike__orders')}} 
 
 GROUP BY 1,2,3), 
 

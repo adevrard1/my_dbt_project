@@ -5,7 +5,10 @@ models:
     description: '{{ doc("int_local_bike__orders") }}'
     columns:
       - name: order_id
-        description: Primary key, unique identifier for each order.
+        description: Composite primary key with product_id, unique identifier for each row.
         tests:
-          - unique
-          - not_null
+            - not_null  
+      - name: product_id
+        description: Composite primary key with order_id, unique identifier for each row.  
+        tests:
+            - not_null  
