@@ -51,8 +51,8 @@ select
   ROUND(total_amount/total_quantity - start_price,2) as price_gap_after_discount,
   stock_to_date
 
-FROM product_description pd 
-LEFT JOIN product_sales ps 
+FROM product_sales ps
+LEFT JOIN  product_description pd 
 ON pd.product_id = ps.product_id
 LEFT JOIN product_stock pst
 ON pd.product_id = pst.product_id

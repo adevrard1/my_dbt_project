@@ -6,4 +6,7 @@ models:
     columns:
       - name: product_store_id
         description: Primary key, unique identifier for each product and store.
+        tests:
+            - unique 
+            - not_null  
   

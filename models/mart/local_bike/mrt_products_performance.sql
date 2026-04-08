@@ -24,7 +24,7 @@ SELECT
     category_name,
     model_year,
     total_amount AS turnover,
-    ROUND(SAFE_DIVIDE(total_amount, SUM(total_amount) OVER (PARTITION BY month_year)) * 100,1) AS turnover_contribution,
+    ROUND(SAFE_DIVIDE(total_amount, SUM(total_amount) OVER (PARTITION BY month_year)) * 100,1) AS turnover_contribution_per_month,
     ROW_NUMBER() OVER (PARTITION BY month_year ORDER BY total_amount DESC) AS ranking_products_by_turnover_per_month,
     total_quantity,
     avg_price,
