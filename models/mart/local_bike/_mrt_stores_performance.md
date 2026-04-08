@@ -6,6 +6,9 @@ This dashboard evaluates stores performance at a monthly level by tracking key m
 - nb_orders : number of orders handled per store
 - total_sales_quantity : total volume sales generated per store
 - avg_amount_per_order : average value basket per order in the store 
+- nb_order_not_delivered,
+- nb_shipments_late,
+- stock_to_date
 
 It also provides a ranking of stores based on value sales performance per month.
 
