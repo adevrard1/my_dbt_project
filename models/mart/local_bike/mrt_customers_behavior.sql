@@ -2,9 +2,11 @@ WITH
   rfm AS (
     SELECT
       customer_id,
+      customer_name,
       customer_state,
       customer_city,
       MAX(order_date) AS last_purchase_date,
+      MAX(order_id) AS last_order_id,      
       COUNT(DISTINCT order_id) AS nb_orders,
       ROUND(SUM(total_order_amount), 2) AS total_amount_spend,
       ROUND(SUM(total_order_amount) / COUNT(DISTINCT order_id), 2)
@@ -12,17 +14,21 @@ WITH
     FROM {{ref('int_local_bike__orders')}}
     GROUP BY 
       customer_id,
+      customer_name,
       customer_state,
       customer_city
   ),
+
   max_date AS (
     SELECT
       MAX(order_date) AS max_date
     FROM {{ref('int_local_bike__orders')}}
   ),
+
   rfm_score AS (
     SELECT
       customer_id,
+      customer_name,
       customer_state,
       customer_city,
       total_amount_spend,
@@ -38,6 +44,7 @@ WITH
         ELSE 0
         END AS frequency_score,
       last_purchase_date,
+      last_order_id,
       CASE
         WHEN last_purchase_date > DATE_SUB(md.max_date, INTERVAL 6 MONTH) THEN 5
         WHEN last_purchase_date > DATE_SUB(md.max_date, INTERVAL 12 MONTH)
@@ -55,7 +62,7 @@ WITH
 SELECT
   *,
   CASE
-    WHEN amount_spend_score >= 4 AND frequency_score >= 4 AND recency_score >= 3
+    WHEN amount_spend_score >= 4 AND frequency_score >= 3 AND recency_score >= 4
       THEN "Top_client"
     WHEN recency_score <= 2 THEN "Churn_risk"
     ELSE "Other_clients"

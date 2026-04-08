@@ -4,7 +4,7 @@ SELECT
   phone, 
   email, 
   street, 
-  city, 
-  state, 
+  city as store_city,
+  state as store_state,
   zip_code
 FROM {{source('local_bike','stores')}}

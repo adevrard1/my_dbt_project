@@ -3,7 +3,6 @@
 )}}
 
 
-
 with order_sales as (
 
 select 
@@ -18,8 +17,9 @@ group by order_id
 
 select 
     customer_id,
-    city as customer_city,
-    state as customer_state
+    customer_name,
+    customer_city,
+    customer_state
 from {{ref('stg_local_bike_sales__customers')}}
 
 ), staffs_details as (
@@ -35,30 +35,31 @@ from {{ref('stg_local_bike_sales__staffs')}}
 select 
     store_id,
     store_name,
-    city as store_city,
-    state as store_state
+    store_city,
+    store_state
 from {{ref('stg_local_bike_sales__stores')}}
 )
 
 select 
     o.order_id,
-    order_date,
+    o.order_date,
     o.customer_id,
-    customer_state,
-    customer_city,
+    cd.customer_name,
+    cd.customer_state,
+    cd.customer_city,
     o.staff_id,
-    staff_name,
-    manager_id,
+    sd.staff_name,
+    sd.manager_id,
     o.store_id,
-    store_name,
-    store_city,
-    store_state,
-    order_status,
-    required_date,
-    shipped_date,
-    total_order_amount,
-    total_order_quantity,
-    total_distinct_items
+    std.store_name,
+    std.store_city,
+    std.store_state,
+    o.order_status,
+    o.required_date,
+    o.shipped_date,
+    o.total_order_amount,
+    o.total_order_quantity,
+    o.total_distinct_items
 
 from {{ref('stg_local_bike_sales__orders')}} as o
 left join order_sales os on o.order_id = os.order_id 

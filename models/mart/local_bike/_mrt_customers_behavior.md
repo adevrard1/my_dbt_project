@@ -5,6 +5,7 @@ This table aims to analyze customer behavior by tracking key metrics such as:
 - avg_spend_per_order  
 - nb_orders  
 - last_purchase_date
+- last_order_id
 
  It also includes an RFM(recency,frequency, monetary) scores to segment customers based on their value : 
  - amount_spend_score : The amount spend score is assigned using quintiles (NTILE(5)) based on total amount spent: lowest values receive score 1 and highest values receive score 5.
@@ -12,7 +13,7 @@ This table aims to analyze customer behavior by tracking key metrics such as:
  - recency_score : If the last purchase occurred less than 6 months ago: score 5; less than 12 months: score 4; less than 18 months: score 3; less than 24 months: score 2; more than 24 months: score 1.
 The highest the score is the better it is. Scores can not exceed 5. 
 
- It helps identifying in the **client_segments** : loyal customers with high potential and inactive customers at risk of churn.
+ It helps identifying in the **client_segments** : loyal customers with high potential (amount_spend_score and recency_score >=4, frequency_score >=3), and inactive customers at risk of churn (recency_score <= 2).
 
 {% enddocs %}
 
