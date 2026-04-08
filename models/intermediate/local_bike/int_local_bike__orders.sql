@@ -62,8 +62,7 @@ select
     o.required_date,
     o.shipped_date,
     os.total_order_amount,
-    os.total_order_quantity,
-    os.total_distinct_items
+    os.total_order_quantity
 
 from {{ref('stg_local_bike_sales__orders')}} as o
 left join order_sales os on o.order_id = os.order_id 
