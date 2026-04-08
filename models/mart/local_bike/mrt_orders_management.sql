@@ -12,12 +12,12 @@ select
     store_name,
     store_city,
     store_state,
-    order_status,
-    CASE WHEN order_status <> '4' then true else False end as order_not_delivered,
-    required_date,
-    shipped_date,
-    CASE WHEN shipped_date > required_date then true else False end as shipment_is_late,
-    total_order_amount,
-    total_order_quantity,
-    total_distinct_items
+    MAX(order_status) as order_status,
+    CASE WHEN MAX(order_status)  <> '4' then true else False end as order_not_delivered,
+    MAX(required_date) as required_date,
+    MAX(shipped_date) as shipped_date,
+    CASE WHEN MAX(shipped_date) > MAX(required_date)  then true else False end as shipment_is_late,
+    SUM(total_order_amount) as total_order_amount,
+    SUM(total_order_quantity) as total_order_quantity
 from {{ref('int_local_bike__orders')}}  
+group by 1,2,3,4,5,6,7,8,9, 10, 11, 12, 13

@@ -16,7 +16,7 @@ total_amount : Total sales amount for the product (rounded to 2 decimal places).
 total_quantity : Total number of units sold for the product.
 final_price : Average price per unit sold after any discounts, calculated as total_amount / total_quantity (rounded to 2 decimals).
 price_gap_after_discount : Difference between the final price and the start price, showing the effective discount applied (rounded to 2 decimals).
-stock_to_date : Available inventory of the product up to the given date.
+stock_to_date : Available inventory of the product today.
 
 Purpose:
 This table is intended for sales performance analysis, pricing analysis, and inventory monitoring at the product level. It allows tracking how discounts impact revenue, evaluating brand/category performance, and monitoring stock levels over time.
