@@ -7,11 +7,14 @@ with order_sales as (
 
 select 
     order_id, 
+    product_id,
     ROUND(sum(order_item_amount),2) as total_order_amount,
     sum(order_item_quantity) as total_order_quantity,
     count(distinct item_id) as total_distinct_items
 from {{ref('stg_local_bike_sales__order_items')}}
-group by order_id
+group by 
+    order_id,
+    product_id
 
 ), customers_details as (
 
@@ -43,6 +46,7 @@ from {{ref('stg_local_bike_sales__stores')}}
 select 
     o.order_id,
     o.order_date,
+    os.product_id,
     o.customer_id,
     cd.customer_name,
     cd.customer_state,
