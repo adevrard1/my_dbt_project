@@ -3,7 +3,6 @@
 )}}
 
 
-
 with order_sales as (
 
 select 
@@ -18,8 +17,9 @@ group by order_id
 
 select 
     customer_id,
-    city as customer_city,
-    state as customer_state
+    customer_name,
+    customer_city,
+    customer_state
 from {{ref('stg_local_bike_sales__customers')}}
 
 ), staffs_details as (
@@ -35,8 +35,8 @@ from {{ref('stg_local_bike_sales__staffs')}}
 select 
     store_id,
     store_name,
-    city as store_city,
-    state as store_state
+    store_city,
+    store_state
 from {{ref('stg_local_bike_sales__stores')}}
 )
 

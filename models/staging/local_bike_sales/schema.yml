@@ -117,6 +117,8 @@ models:
         tests:
             - unique
             - not_null
+      - name: customer_name
+        description: "Full name of each customer resulting from concatenation of First and Last name."
 
 
 
