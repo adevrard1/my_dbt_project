@@ -20,7 +20,7 @@ SELECT
     store_name,
     store_city,
     store_state,
-    ROUND(total_turnover,2) as total_turnover
+    ROUND(total_turnover,2) as total_turnover,
     ROUND(total_turnover / SUM(total_turnover)
         OVER (PARTITION BY month_year) * 100,2)
         AS turnover_contribution,

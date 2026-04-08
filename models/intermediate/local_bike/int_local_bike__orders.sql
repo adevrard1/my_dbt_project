@@ -7,7 +7,7 @@ with order_sales as (
 
 select 
     order_id, 
-    sum(order_item_amount) as total_order_amount,
+    ROUND(sum(order_item_amount),2) as total_order_amount,
     sum(order_item_quantity) as total_order_quantity,
     count(distinct item_id) as total_distinct_items
 from {{ref('stg_local_bike_sales__order_items')}}
@@ -57,9 +57,9 @@ select
     o.order_status,
     o.required_date,
     o.shipped_date,
-    o.total_order_amount,
-    o.total_order_quantity,
-    o.total_distinct_items
+    os.total_order_amount,
+    os.total_order_quantity,
+    os.total_distinct_items
 
 from {{ref('stg_local_bike_sales__orders')}} as o
 left join order_sales os on o.order_id = os.order_id 
