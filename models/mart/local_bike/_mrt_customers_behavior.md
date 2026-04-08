@@ -5,6 +5,7 @@ This table aims to analyze customer behavior by tracking key metrics such as:
 - avg_spend_per_order  
 - nb_orders  
 - last_purchase_date
+- last_order_id
 
  It also includes an RFM(recency,frequency, monetary) scores to segment customers based on their value : 
  - amount_spend_score : The amount spend score is assigned using quintiles (NTILE(5)) based on total amount spent: lowest values receive score 1 and highest values receive score 5.
