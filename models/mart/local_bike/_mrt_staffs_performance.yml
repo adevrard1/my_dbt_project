@@ -5,5 +5,7 @@ models:
     description: '{{ doc("mrt_staffs_performance") }}'
     columns:
       - name: month_year
-        description: Primary key, unique identifier for each row.
+        description: Composite primary key with staff_id, unique identifier for each row.
+      - name: staff_id
+        description: Composite primary key with month_year, unique identifier for each row.    
   
