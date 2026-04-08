@@ -12,24 +12,32 @@
     ROUND(SUM(total_order_amount)/COUNT(distinct order_id),2) as avg_amount_per_order
 FROM {{ref('int_local_bike__orders')}}
   GROUP BY 1,2,3,4,5
-)
+), 
+
+deliveries as (
+    select 
+        DATE_TRUNC(order_date, MONTH) AS month_year,
+        store_id,
+        SUM(order_not_delivered) as nb_order_not_delivered,
+        SUM(shipment_is_late) as nb_shipments_late
+    from {{ref('mrt_orders_management')}}  
+    group by 1,2)
 
 SELECT
-    month_year,
-    store_id,
-    store_name,
-    store_city,
-    store_state,
-    ROUND(total_turnover,2) as total_turnover,
-    ROUND(total_turnover / SUM(total_turnover)
-        OVER (PARTITION BY month_year) * 100,2)
-        AS turnover_contribution,
-    ROW_NUMBER() OVER (
-        PARTITION BY month_year
-        ORDER BY total_turnover DESC
-        ) AS ranking_turnover_stores_per_month,
-    total_sales_quantity,
-    nb_orders,
-    avg_amount_per_order
-FROM sales
+    s.month_year,
+    s.store_id,
+    s.store_name,
+    s.store_city,
+    s.store_state,
+    ROUND(s.total_turnover, 2) AS total_turnover,
+    ROUND(s.total_turnover / SUM(s.total_turnover) OVER (PARTITION BY s.month_year) * 100, 2) AS turnover_contribution,
+    ROW_NUMBER() OVER ( PARTITION BY s.month_year ORDER BY s.total_turnover DESC) AS ranking_turnover_stores_per_month,
+    s.total_sales_quantity,
+    s.nb_orders,
+    s.avg_amount_per_order,
+    d.nb_order_not_delivered,
+    d.nb_shipments_late
+FROM sales s 
+LEFT JOIN deliveries d 
+ON s.month_year = d.month_year and s.store_id = d.store_id
 ORDER BY month_year DESC, ranking_turnover_stores_per_month

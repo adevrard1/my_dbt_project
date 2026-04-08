@@ -13,6 +13,7 @@ select
     std.store_city,
     std.store_state,
     order_status,
+    CASE WHEN order_status <> '4' then true else False end as order_not_delivered,
     required_date,
     shipped_date,
     CASE WHEN shipped_date > required_date then true else False end as shipment_is_late,
