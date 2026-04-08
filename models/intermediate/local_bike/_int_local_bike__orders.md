@@ -1,11 +1,12 @@
 {% docs int_local_bike__orders %}
 
-This table consolidates order information along with related customer, staff, and store details, and includes aggregated order metrics. Each row represents a single order.
+This table consolidates order information at a product level along with related customer, staff, and store details, and includes aggregated order metrics. Each row represents a single order.
 
 Columns:
 
 order_id : Unique identifier for the order.
 order_date : Date when the order was placed.
+product_id : Unique identifier for each product. 
 customer_id : Unique identifier of the customer who placed the order.
 customer_name : Name of the customer.
 customer_state : State/region of the customer.
