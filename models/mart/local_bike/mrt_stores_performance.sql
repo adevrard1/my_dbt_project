@@ -10,7 +10,7 @@
     SUM(total_order_quantity) as total_sales_quantity,
     COUNT(distinct order_id) as nb_orders,
     ROUND(SUM(total_order_amount)/COUNT(distinct order_id),2) as avg_amount_per_order
-FROM {{ref('int_local_bike__orders')}}
+FROM {{ref('mrt_orders_management')}}
   GROUP BY 1,2,3,4,5
 ), 
 
