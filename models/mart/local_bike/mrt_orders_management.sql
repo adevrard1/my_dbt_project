@@ -4,7 +4,7 @@ select
     customer_id,
     customer_name,
     customer_state,
-    cd.customer_city,
+    customer_city,
     staff_id,
     staff_name,
     manager_id,
