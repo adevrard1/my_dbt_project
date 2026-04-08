@@ -26,9 +26,9 @@ deliveries as (
 store_stocks as (
     SELECT
         store_id,
-        SUM(stock_to_date) as stock_to_date
+        stock_to_date
     FROM {{ref('int_local_bike__stocks')}} 
-    GROUP BY 1)
+)
 
 
 SELECT
