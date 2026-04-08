@@ -4,8 +4,8 @@ models:
   - name: int_local_bike__stocks
     description: '{{ doc("int_local_bike__stocks") }}'
     columns:
-      - name: product_store_id
-        description: Primary key, unique identifier for each product and store.
+      - name: store_id
+        description: Primary key, unique identifier for each store.
         tests:
             - unique 
             - not_null  
