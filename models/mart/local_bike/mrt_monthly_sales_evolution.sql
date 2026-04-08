@@ -54,17 +54,17 @@ WITH
 SELECT
   c.month_year,
   COALESCE(total_sales_amount,0)                                                                      as total_sales_amount,
-  COALESCE(ROUND((SAFE_DIVIDE(total_sales_amount,precedent_month_total_sales_amount)-1)*100,1),0)     as evol_sales_amount_vs_precedent_month_in%,  
-  COALESCE(ROUND((SAFE_DIVIDE(total_sales_amount,lastyear_month_total_sales_amount)-1)*100,1),0)      as evol_sales_amount_vs_lastyear_in%,
+  COALESCE(ROUND((SAFE_DIVIDE(total_sales_amount,precedent_month_total_sales_amount)-1)*100,1),0)     as evol_sales_amount_vs_precedent_month_in_percentage,  
+  COALESCE(ROUND((SAFE_DIVIDE(total_sales_amount,lastyear_month_total_sales_amount)-1)*100,1),0)      as evol_sales_amount_vs_lastyear_in_percentage,
   COALESCE(total_sales_quantity,0)                                                                    as total_sales_quantity, 
-  COALESCE(ROUND((SAFE_DIVIDE(total_sales_quantity,precedent_month_total_sales_quantity)-1)*100,1),0) as evol_sales_quantity_vs_precedent_month_in%,  
-  COALESCE(ROUND((SAFE_DIVIDE(total_sales_quantity,lastyear_month_total_sales_quantity)-1)*100,1),0)  as evol_sales_quantity_vs_lastyear_in%,
+  COALESCE(ROUND((SAFE_DIVIDE(total_sales_quantity,precedent_month_total_sales_quantity)-1)*100,1),0) as evol_sales_quantity_vs_precedent_month_in_percentage,  
+  COALESCE(ROUND((SAFE_DIVIDE(total_sales_quantity,lastyear_month_total_sales_quantity)-1)*100,1),0)  as evol_sales_quantity_vs_lastyear_in_percentage,
   COALESCE(nb_orders,0)                                                                               as nb_orders,
-  COALESCE(ROUND((SAFE_DIVIDE(total_sales_quantity,precedent_month_nb_orders)-1)*100,1),0)            as evol_nb_orders_vs_precedent_month_in%,  
-  COALESCE(ROUND((SAFE_DIVIDE(nb_orders,lastyear_month_nb_orders)-1)*100,1),0)                        as evol_nb_orders_vs_lastyear_in%,
+  COALESCE(ROUND((SAFE_DIVIDE(total_sales_quantity,precedent_month_nb_orders)-1)*100,1),0)            as evol_nb_orders_vs_precedent_month_in_percentage,  
+  COALESCE(ROUND((SAFE_DIVIDE(nb_orders,lastyear_month_nb_orders)-1)*100,1),0)                        as evol_nb_orders_vs_lastyear_in_percentage,
   COALESCE(avg_order_value,0)                                                                         as avg_order_value,
-  COALESCE(ROUND((SAFE_DIVIDE(avg_order_value,precedent_month_avg_order_value)-1)*100,1),0)           as evol_avg_order_value_vs_precedent_month_in%,  
-  COALESCE(ROUND((SAFE_DIVIDE(avg_order_value,lastyear_month_avg_order_value)-1)*100,1),0)            as evol_avg_order_value_vs_lastyear_in%
+  COALESCE(ROUND((SAFE_DIVIDE(avg_order_value,precedent_month_avg_order_value)-1)*100,1),0)           as evol_avg_order_value_vs_precedent_month_in_percentage,  
+  COALESCE(ROUND((SAFE_DIVIDE(avg_order_value,lastyear_month_avg_order_value)-1)*100,1),0)            as evol_avg_order_value_vs_lastyear_in_percentage
   
 FROM calendar c
 LEFT JOIN monthly_sales ms ON c.month_year = ms.month_year

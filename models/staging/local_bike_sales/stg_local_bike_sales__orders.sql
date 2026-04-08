@@ -9,7 +9,7 @@ SELECT
   CASE
     WHEN shipped_date = 'NULL' THEN NULL
     ELSE CAST(shipped_date AS date)
-  END AS shipped_date
+  END AS shipped_date,
   store_id,
   staff_id
 FROM {{source('local_bike','orders')}}
