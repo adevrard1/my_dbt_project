@@ -56,3 +56,4 @@ SELECT
 FROM monthly_sales_per_product ms
 LEFT JOIN last_30d_sales_per_product p 
   ON ms.product_id = p.product_id
+ ORDER BY ms.month_year desc, turnover desc
