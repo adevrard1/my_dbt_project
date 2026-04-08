@@ -15,12 +15,21 @@ FROM {{ref('int_local_bike__orders')}}
 )
 
 SELECT
-  *,
-  total_turnover / SUM(total_turnover)
-    OVER (PARTITION BY month_year) * 100
-    AS turnover_contribution,
-  ROW_NUMBER() OVER (
-    PARTITION BY month_year
-    ORDER BY total_turnover DESC
-  ) AS ranking_turnover_stores_per_month
+    month_year,
+    store_id,
+    store_name,
+    store_city,
+    store_state,
+    ROUND(total_turnover,2) as total_turnover
+    ROUND(total_turnover / SUM(total_turnover)
+        OVER (PARTITION BY month_year) * 100,2)
+        AS turnover_contribution,
+    ROW_NUMBER() OVER (
+        PARTITION BY month_year
+        ORDER BY total_turnover DESC
+        ) AS ranking_turnover_stores_per_month,
+    total_sales_quantity,
+    nb_orders,
+    avg_amount_per_order
 FROM sales
+ORDER BY month_year DESC, ranking_turnover_stores_per_month
