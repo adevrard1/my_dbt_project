@@ -1,0 +1,22 @@
+select 
+    order_id,
+    order_date,
+    customer_id,
+    customer_name,
+    customer_state,
+    cd.customer_city,
+    staff_id,
+    staff_name,
+    manager_id,
+    store_id,
+    std.store_name,
+    std.store_city,
+    std.store_state,
+    order_status,
+    required_date,
+    shipped_date,
+    CASE WHEN shipped_date > required_date then true else False end as shipment_is_late,
+    total_order_amount,
+    total_order_quantity,
+    total_distinct_items
+from {{ref('int_local_bike__orders')}}  

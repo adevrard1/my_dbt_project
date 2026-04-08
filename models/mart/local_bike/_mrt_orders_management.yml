@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: mrt_orders_management
+    description: '{{ doc("mrt_orders_management") }}'
+    columns:
+      - name: order_id
+        description: "Unique identifier for each order"
